@@ -7,44 +7,68 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; width: 100%; background: #000; font-family: 'Montserrat', sans-serif; overflow: hidden; }
-
-        /* THE COVER */
-        #portal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: 1000;
-            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1), filter 1s ease;
+        
+        body, html { 
+            height: 100%; width: 100%; 
+            background: #000; 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden;
+            /* Allow scrolling so they can find the button */
+            overflow-y: auto; 
         }
-        #cover-img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* IMAGE 4: HYPER-REAL LIQUID GLASS BUTTON */
+        /* 1. THE FULL, UNOBSTRUCTED COVER */
+        #portal-cover {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+        #cover-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* 2. THE TRANSITION ZONE (Where the button lives BELOW the cover) */
+        #transition-zone {
+            width: 100vw;
+            height: 30vh; /* Space below the image */
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* IMAGE 4: HYPER-REAL LIQUID GLASS BUTTON (Safe Zone) */
         .glass-btn {
-            position: absolute;
-            bottom: 40px; /* Clears your name entirely */
-            left: 50%;
-            transform: translateX(-50%);
             width: 280px;
             height: 64px;
             border-radius: 32px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 15px rgba(255,255,255,0.2);
+            
+            /* High-Refraction Glass */
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            
+            /* 3D Depth */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 15px rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
+            
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             cursor: pointer;
+            position: relative;
         }
 
+        /* LIQUID STARDUST INTERIOR */
         .liquid-core {
             position: absolute;
             width: 150%; height: 150%;
-            background: radial-gradient(circle, rgba(197, 160, 89, 0.6) 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
-            filter: blur(10px);
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.3) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+            filter: blur(8px);
             animation: moveLiquid 6s infinite alternate;
         }
 
@@ -56,25 +80,47 @@
         .btn-text {
             position: relative; z-index: 10;
             font-family: 'Cinzel', serif;
-            color: #fff;
+            color: rgba(197, 160, 89, 0.8); /* Stardian Gold */
             letter-spacing: 5px;
             font-size: 10px;
             text-transform: uppercase;
         }
 
-        /* IMAGE 5: SOPHISTICATED LIGHT CONTENT PAGE */
+        /* 3. THE LIGHT CONTENT PAGE (Warm Luxury) */
         #content-page {
-            height: 100vh;
+            width: 100vw;
             background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); /* Warm light luxury */
             overflow-y: auto;
-            display: none;
+            display: none; /* Only show after Ascending */
             color: #4a4a4a;
             padding: 80px 20px;
+            position: relative;
+        }
+
+        /* MINI GLASS REVERSE BUTTON (Top Center) */
+        #reverse-glass {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 1px;
+            font-family: 'Cinzel';
+            color: #b08d57;
+            font-size: 8px;
+            letter-spacing: 3px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
         }
 
         .content-container {
             max-width: 700px;
-            margin: 0 auto;
+            margin: 60px auto 0 auto; /* Moved down for reverse button */
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
             padding: 60px 40px;
@@ -87,73 +133,71 @@
         h2 { font-size: 1rem; border-bottom: 1px solid rgba(176, 141, 87, 0.2); padding-bottom: 10px; margin-top: 50px; }
         p { line-height: 1.9; margin-bottom: 20px; font-weight: 400; font-size: 15px; text-align: justify; }
 
-        .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .chart-item { background: rgba(255,255,255,0.6); padding: 10px; font-size: 12px; border-left: 2px solid #b08d57; }
-
     </style>
 </head>
 <body>
 
-    <section id="portal">
+    <section id="portal-cover">
         <img src="cover.png" id="cover-img">
+    </section>
+
+    <div id="transition-zone">
         <div class="glass-btn" onclick="ascend()">
             <div class="liquid-core"></div>
-            <span class="btn-text">Scroll to Ascend</span>
+            <span class="btn-text">Ascend to Stardian</span>
         </div>
     </section>
 
     <main id="content-page">
+        <div id="reverse-glass" onclick="reverse()">REVERSE</div>
+        
         <div class="content-container">
             <h1>The Three Layers</h1>
-            <p>Most people know their sun sign. It's the one you get when someone asks "what's your sign?" at a party. Understanding all three core placements is the difference between reading a summary of a book and actually reading it.</p>
-
-            <h2>How to Find Yours</h2>
-            <p>You need three things: your date of birth, your place of birth, and your exact time of birth. The time is the critical one. Without it, your rising sign cannot be calculated accurately.</p>
-
+            <p>You have three core placements that shape who you are, how you feel, and how the world receives you. Understanding all three is the difference between reading a summary of a book and actually reading it.</p>
             <h2>The Sacred Triad</h2>
             <p><strong>The Sun:</strong> The engine. Your core energy and fundamental drive.</p>
             <p><strong>The Moon:</strong> The interior. Your emotional world and private experience.</p>
             <p><strong>The Rising:</strong> The exterior. Your presence and how the world receives you.</p>
-
-            <h2>The Chart Rulers</h2>
-            <div class="chart-grid">
-                <div class="chart-item">Aries: Mars</div>
-                <div class="chart-item">Taurus: Venus</div>
-                <div class="chart-item">Gemini: Mercury</div>
-                <div class="chart-item) ">Cancer: Moon</div>
-                <div class="chart-item">Leo: Sun</div>
-                <div class="chart-item">Virgo: Mercury</div>
-                <div class="chart-item">Libra: Venus</div>
-                <div class="chart-item">Scorpio: Pluto</div>
-                <div class="chart-item">Sagittarius: Jupiter</div>
-                <div class="chart-item">Capricorn: Saturn</div>
-                <div class="chart-item">Aquarius: Uranus</div>
-                <div class="chart-item">Pisces: Neptune</div>
             </div>
-
-            <h2 style="text-align:center; margin-top:80px; border:none;">Now Read Differently</h2>
-            <p style="text-align:center; font-style: italic;">Scroll until it flinches. That still stands.</p>
-        </div>
     </main>
 
     <script>
+        const cover = document.getElementById('portal-cover');
+        const zone = document.getElementById('transition-zone');
+        const page = document.getElementById('content-page');
+        const body = document.body;
+
+        // ASCEND: Shatter and Slide
         function ascend() {
-            const portal = document.getElementById('portal');
-            const page = document.getElementById('content-page');
+            cover.style.transition = "transform 1s cubic-bezier(0.9, 0, 0.1, 1), filter 1s ease, opacity 1s ease";
             
-            portal.style.transform = "translateY(-100%)";
-            portal.style.filter = "blur(10px)";
+            // The Shatter/Flinch effect
+            cover.style.filter = "blur(30px) brightness(1.5)";
+            cover.style.opacity = "0";
+            cover.style.transform = "translateY(-100%) scale(1.1)";
             
-            setTimeout(() => {
-                portal.style.display = "none";
-                page.style.display = "block";
-                document.body.style.overflowY = "auto";
-            }, 800);
+            zone.style.display = "none";
+            page.style.display = "block";
+            body.style.overflow = "hidden"; // Lock scrolling for content page
         }
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 10) ascend();
-        });
+        // REVERSE: Back to Cover
+        function reverse() {
+            page.style.display = "none";
+            zone.style.display = "flex";
+            
+            // Bring cover back instantly, then animate it down
+            cover.style.transition = "none"; 
+            cover.style.filter = "none";
+            cover.style.opacity = "1";
+            cover.style.transform = "translateY(-100%)";
+
+            setTimeout(() => {
+                cover.style.transition = "transform 1s cubic-bezier(0.7, 0, 0.3, 1)";
+                cover.style.transform = "translateY(0)";
+                body.style.overflowY = "auto";
+            }, 50);
+        }
     </script>
 </body>
 </html>
