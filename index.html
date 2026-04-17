@@ -3,274 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Ascendant Matrix | Empress Edition</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
-    
+    <title>Stardian | The Ascendant Matrix</title>
     <style>
-        :root {
-            --gold: #d4af37;
-            --marble: #f2f2f2;
-            --glass: rgba(255, 255, 255, 0.15);
-            --text-dark: #1a1a1a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--marble);
-            background-image: url('https://www.transparenttextures.com/patterns/white-marble.png');
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-dark);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #000; /* Keeps the edges clean */
             overflow-x: hidden;
-            line-height: 1.6;
         }
 
-        /* STAGE 1: THE SOVEREIGN PORTAL (COVER) */
         #cover-section {
-            position: relative;
-            height: 100vh;
+            position: fixed;
+            top: 0; left: 0;
             width: 100vw;
-            overflow: hidden;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+            height: 100vh;
+            z-index: 1000;
+            background-color: #000;
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
+        /* This ensures the image covers the screen perfectly */
         #cover-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            opacity: 0.9;
+            object-fit: cover; 
+            object-position: center;
         }
 
-        .scroll-indicator {
+        .scroll-prompt {
             position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--gold);
-            font-family: 'Cinzel', serif;
-            letter-spacing: 3px;
-            font-size: 0.8rem;
-            animation: pulse 2s infinite;
-        }
-
-        /* STAGE 2: UI & LAYOUT UTILITIES */
-        .content-wrapper {
-            padding: 40px 25px;
-            max-width: 800px;
-            margin: 0 auto;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
-        }
-
-        .content-wrapper.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1, h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--gold);
+            bottom: 40px;
+            width: 100%;
             text-align: center;
-            margin-bottom: 20px;
+            color: #C5A059;
+            font-family: serif;
+            letter-spacing: 5px;
+            font-size: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Makes text pop against marble */
         }
 
-        /* THE APEX GLASS BUTTONS */
-        .glass-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 40px;
+        #main-content {
+            background-color: #000;
+            min-height: 200vh;
+            padding-top: 100vh;
         }
-
-        .glass-button {
-            position: relative;
-            height: 120px;
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(15px) saturate(180%);
-            -webkit-backdrop-filter: blur(15px) saturate(180%);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15),
-                        inset 0 0 20px rgba(255, 255, 255, 0.2);
-            color: var(--gold);
-            text-decoration: none;
-            font-family: 'Cinzel', serif;
-            font-weight: bold;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .glass-button:active {
-            transform: scale(0.95);
-        }
-
-        /* WATER BUBBLE EFFECT INSIDE BUTTON */
-        .glass-button::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            opacity: 0.5;
-            pointer-events: none;
-            transition: transform 0.5s ease;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
-            margin: 60px 0;
-        }
-
     </style>
 </head>
 <body>
 
     <section id="cover-section">
-        <img src="cover.png" id="cover-image" alt="The Ascendant Matrix">
-        <div class="scroll-indicator">SCROLL TO ASCEND</div>
+        <img src="./cover.png" id="cover-image" alt="Stardian">
+        <div class="scroll-prompt">Scroll to Ascend</div>
     </section>
 
-    <div id="main-content">
-        <section class="content-wrapper" id="intro">
-            <h1>The Sacred Triad</h1>
-            <p style="text-align: center; font-style: italic; margin-bottom: 30px;">Sun • Moon • Ascendant</p>
-            <p>To understand the Matrix is to understand the three pillars of the soul. Your <strong>Sun</strong> is your core identity, your <strong>Moon</strong> is your private emotional landscape, but your <strong>Ascendant</strong>—your Rising Sign—is the lens through which you view the world and the mask the world sees first.</p>
-            <p>It is the "Dawn" of your existence, the specific zodiacal sign that was climbing over the eastern horizon at the precise moment of your first breath.</p>
-            
-            <div class="section-divider"></div>
-        </section>
+    <div id="main-content"></div>
 
-        <section class="content-wrapper" id="the-hook">
-            <h2>The Initial Transmission</h2>
-            <p style="margin-bottom: 40px; text-align: center;">Choose your frequency to begin the descent.</p>
-
-            <div class="glass-container">
-                <a href="#aries" class="glass-button">Aries</a>
-                <a href="#taurus" class="glass-button">Taurus</a>
-                <a href="#gemini" class="glass-button">Gemini</a>
-                <a href="#cancer" class="glass-button">Cancer</a>
-                <a href="#leo" class="glass-button">Leo</a>
-                <a href="#virgo" class="glass-button">Virgo</a>
-                <a href="#libra" class="glass-button">Libra</a>
-                <a href="#scorpio" class="glass-button">Scorpio</a>
-                <a href="#sagittarius" class="glass-button">Sagittarius</a>
-                <a href="#capricorn" class="glass-button">Capricorn</a>
-                <a href="#aquarius" class="glass-button">Aquarius</a>
-                <a href="#pisces" class="glass-button">Pisces</a>
-            </div>
-
-            <div class="section-divider"></div>
-        </section>
-        <section class="content-wrapper" id="deep-dive">
-            <h2>The Descent into the Matrix</h2>
-            <div style="font-size: 1.1rem; line-height: 2; letter-spacing: 0.5px;">
-                <p style="margin-bottom: 25px;">01. The Matrix is not a cage; it is a map of the light you chose to wear.</p>
-                <p style="margin-bottom: 25px;">02. Your Ascendant is the frequency of your first impact with the physical world.</p>
-                <p style="margin-bottom: 25px;">03. It governs the physical body, the vessel of your consciousness.</p>
-                <p style="margin-bottom: 25px;">04. Observe the way you enter a room; that is the Matrix in motion.</p>
-                <p style="margin-bottom: 25px;">05. Observe the way others react to your silence; that is the mask speaking.</p>
-                <p style="margin-bottom: 25px;">06. The Rising sign is the bridge between the internal soul and the external reality.</p>
-                <p style="margin-bottom: 25px;">07. It is the filter through which you process every experience.</p>
-                <p style="margin-bottom: 25px;">08. To master your Rising sign is to master your survival instincts.</p>
-                <p style="margin-bottom: 25px;">09. It is the 'How' of your life, while the Sun is the 'Why'.</p>
-                <p style="margin-bottom: 25px;">10. In the shadow of the Matrix, we find our deepest insecurities about being seen.</p>
-                <p style="margin-bottom: 25px;">11. In the light of the Matrix, we find our most potent social power.</p>
-                <p style="margin-bottom: 25px;">12. The first house is the house of Self—the Alpha point.</p>
-                <p style="margin-bottom: 25px;">13. You are the protagonist of this specific holographic projection.</p>
-                <p style="margin-bottom: 25px;">14. The world meets the Ascendant before it ever meets the Heart.</p>
-                <p style="margin-bottom: 25px;">15. This is the alchemy of personality.</p>
-                <p style="margin-bottom: 25px;">16. Your appearance, your gait, your immediate aura—all encoded.</p>
-                <p style="margin-bottom: 25px;">17. When the Ascendant is in alignment, life flows without friction.</p>
-                <p style="margin-bottom: 25px;">18. When the Matrix is distorted, we feel 'unseen' despite being looked at.</p>
-                <p style="margin-bottom: 25px;">19. We are now approaching the core of the 12 archetypes.</p>
-                <p style="margin-bottom: 25px;">20. Prepare to see the mechanics of your specific lens.</p>
-                <p style="margin-bottom: 25px;">21. The Matrix is now fully active. Select your sign below or scroll to witness the spectrum.</p>
-            </div>
-
-            <div class="section-divider"></div>
-        </section>
-        <section class="content-wrapper" id="the-matrix">
-            <div id="aries" class="matrix-card"><h3>Aries Rising</h3><p>The Spark. Dynamic, pioneering, and fiercely independent. You meet the world with raw courage and a "warrior" aura.</p></div>
-            <div id="taurus" class="matrix-card"><h3>Taurus Rising</h3><p>The Anchor. Grounded, aesthetic, and unwavering. You radiate a sense of calm, luxury, and physical presence.</p></div>
-            <div id="gemini" class="matrix-card"><h3>Gemini Rising</h3><p>The Messenger. Quick-witted, versatile, and curious. You process reality through the lens of data and social connection.</p></div>
-            <div id="cancer" class="matrix-card"><h3>Cancer Rising</h3><p>The Guardian. Empathic, intuitive, and protective. You project a warmth that feels like a sanctuary to others.</p></div>
-            <div id="leo" class="matrix-card"><h3>Leo Rising</h3><p>The Luminary. Radiating solar power, charisma, and creative fire. You are designed to be seen and to lead with the heart.</p></div>
-            <div id="virgo" class="matrix-card"><h3>Virgo Rising</h3><p>The Alchemist. Precise, observant, and discerning. You seek to refine the world into its most perfect version.</p></div>
-            <div id="libra" class="matrix-card"><h3>Libra Rising</h3><p>The Harmonizer. Graceful, diplomatic, and aesthetically driven. You view life as a search for balance and beauty.</p></div>
-            <div id="scorpio" class="matrix-card"><h3>Scorpio Rising</h3><p>The Phoenix. Intense, magnetic, and transformative. You see through the surface and command absolute depth.</p></div>
-            <div id="sagittarius" class="matrix-card"><h3>Sagittarius Rising</h3><p>The Explorer. Visionary, optimistic, and expansive. Your lens is fixed on the horizon and the pursuit of truth.</p></div>
-            <div id="capricorn" class="matrix-card"><h3>Capricorn Rising</h3><p>The Architect. Disciplined, authoritative, and enduring. You build structures that withstand the test of time.</p></div>
-            <div id="aquarius" class="matrix-card"><h3>Aquarius Rising</h3><p>The Disruptor. Original, detached, and humanitarian. You see the future before it arrives and live by your own rules.</p></div>
-            <div id="pisces" class="matrix-card"><h3>Pisces Rising</h3><p>The Dreamer. Mystical, fluid, and transcendental. You navigate the world through the lens of spirit and collective soul.</p></div>
-        </section>
-
-        <footer style="text-align: center; color: var(--gold); padding: 60px 0; font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 5px;">
-            THE MATRIX IS ETERNAL • BY THE EMPRESS
-        </footer>
-    </div> <script>
-        // THE APEX ENGINE
+    <script>
         window.addEventListener('scroll', function() {
-            const scrollPos = window.scrollY;
             const cover = document.getElementById('cover-section');
-            const mainContent = document.getElementById('main-content');
-
-            // THE APEX SLIDE LOGIC
-            if (scrollPos > 50) {
+            if (window.scrollY > 20) {
                 cover.style.transform = 'translateY(-100%)';
             } else {
                 cover.style.transform = 'translateY(0)';
             }
-
-            // LUMINOUS BLEED FADE-IN
-            const wrappers = document.querySelectorAll('.content-wrapper');
-            wrappers.forEach(wrapper => {
-                const rect = wrapper.getBoundingClientRect();
-                if (rect.top < window.innerHeight * 0.8) {
-                    wrapper.classList.add('visible');
-                }
-            });
-        });
-
-        // SMOOTH GLIDE FOR GLASS BUTTONS
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // APEX HAPTIC SIMULATION
-        document.querySelectorAll('.glass-button').forEach(button => {
-            button.addEventListener('touchstart', () => {
-                if (window.navigator.vibrate) window.navigator.vibrate(15);
-            });
         });
     </script>
 </body>
-              </html>
-  
+</html>
