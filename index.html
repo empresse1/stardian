@@ -1,13 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stardian</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: black; }
-        img { width: 100%; height: 100%; object-fit: cover; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #000; color: white; font-family: 'Cinzel', serif; overflow: hidden; }
+
+        /* THE COVER */
+        #cover-section {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+            transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        #cover-image { width: 100%; height: 100%; object-fit: cover; }
+
+        /* HYPERREALISTIC 3D GLASS BUTTON */
+        .glass-trigger {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            
+            /* The Glass Shard Body */
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            
+            /* 3D Borders (Light refraction) */
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.05);
+            overflow: hidden; /* Traps the stardust inside */
+        }
+
+        /* COSMIC STARDUST ANIMATION */
+        .stardust {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 100px 150px, #C5A059, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 150px 10px, #fff, rgba(0,0,0,0));
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: drift 10s linear infinite;
+        }
+
+        @keyframes drift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(-100px, -100px); }
+        }
+
+        .button-text {
+            position: relative;
+            z-index: 2;
+            color: #C5A059;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-size: 11px;
+            text-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+        }
+
+        /* CONTENT AREA */
+        #main-content {
+            padding: 100px 20px;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <img src="cover.png">
+
+    <section id="cover-section">
+        <img src="cover.png" id="cover-image">
+        
+        <div class="glass-trigger" onclick="ascend()">
+            <div class="stardust"></div>
+            <span class="button-text">Scroll to Ascend</span>
+        </div>
+    </section>
+
+    <div id="main-content">
+        <h1 style="color: #C5A059; letter-spacing: 8px; font-weight: 200;">STARDIAN</h1>
+        <p style="color: #666; margin-top: 50px;">[ Ready for your Intro Content ]</p>
+    </div>
+
+    <script>
+        function ascend() {
+            document.getElementById('cover-section').style.transform = 'translateY(-100%)';
+            document.body.style.overflowY = 'auto';
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) ascend();
+        });
+    </script>
 </body>
-</html>
+    </html>
+    
